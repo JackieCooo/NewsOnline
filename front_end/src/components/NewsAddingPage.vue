@@ -25,7 +25,9 @@
     </el-space>
     <el-space>
       <span>上传图片</span>
-      <el-button>选择文件</el-button>
+      <el-upload class="upload-box">
+        <el-icon class="upload-icon"><Plus /></el-icon>
+      </el-upload>
     </el-space>
     <el-space>
       <el-button>提交</el-button>
@@ -36,11 +38,13 @@
 
 <script>
 import StyledTitle from "@/components/StyledTitle";
+import {Plus} from "@element-plus/icons-vue"
 
 export default {
   name: "NewsAddingPage",
   components: {
     StyledTitle,
+    Plus,
   },
   data() {
     return {
@@ -80,4 +84,22 @@ export default {
   width: 500px;
 }
 
+.upload-box {
+  width: 200px;
+  height: 200px;
+  border: 2px dashed #E5EAF3;
+  border-radius: 15px;
+}
+
+.upload-box:hover {
+  cursor: pointer;
+  border-color: #8D9095;
+}
+
+.upload-icon {
+  font-size: 50px;
+  color: #E5EAF3;
+  text-align: center;
+  margin-top: 75px;
+}
 </style>

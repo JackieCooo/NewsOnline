@@ -15,7 +15,7 @@ create table news
 create index news_tid_fk
     on news (ntid);
 
-INSERT INTO news_online.news (nid, ntid, ntitle, nauthor, ncreatedate, npic, ncontent, nmodifydate, nsummary) VALUES (-1777643519, 1, 'test', 'admin', '2022-06-12 17:35:00', 0x, 'testtest', null, 'test');
+INSERT INTO news_online.news (nid, ntid, ntitle, nauthor, ncreatedate, npic, ncontent, nmodifydate, nsummary) VALUES (-1777643519, 1, 'test', 'admin', '2022-06-12 17:35:00', null, 'testtest', null, 'test');
 INSERT INTO news_online.news (nid, ntid, ntitle, nauthor, ncreatedate, npic, ncontent, nmodifydate, nsummary) VALUES (47, 7, '百余名遭上海钓鱼执法车主要求退还罚款', 'news', '2007-10-28 10:59:07', null, '　　执法大队无人回应
 　　昨日上午9时许，曾被“钓鱼”的车主陆续赶到原南汇区城市交通行政执法大队，要求见大队负责人，门卫以负责人不在为由，不让车主入内。大门外，人越聚越多，最多时达到100多人。与此同时，身穿保安服和警服的人也越来越多，有几十人。
 　　中午时分，众车主推开大门强行进入，近日频繁出现在媒体上的湖北籍女子张兰平也在其中。

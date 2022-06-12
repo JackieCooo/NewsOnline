@@ -9,7 +9,7 @@ export default {
 </script>
 
 <style>
-#app, html, body {
+html, body {
   width: 100%;
   height: 100%;
   padding: 0 0 0 0;

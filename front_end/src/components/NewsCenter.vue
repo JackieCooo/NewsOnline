@@ -1,11 +1,11 @@
 <template>
   <div v-if="topics != null && newsTitles != null">
-    <el-space direction="vertical">
-      <el-space>
+    <el-space direction="vertical" alignment="start">
+      <div class="top-bar">
         <el-image :src="require('@/assets/blue_bar.png')"></el-image>
         <span class="left-title">新闻中心</span>
         <span class="right-title">分类新闻</span>
-      </el-space>
+      </div>
       <el-space alignment="start" :size="10">
         <el-space direction="vertical" class="content-area">
           <el-space class="navi-bar" :wrap="true" style="margin-bottom: 10px;">
@@ -79,6 +79,12 @@ export default {
   width: 600px;
 }
 
+.top-bar {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+}
+
 .flex-box {
   width: 600px;
   display: flex;
@@ -92,19 +98,16 @@ export default {
 
 .left-title {
   position: absolute;
-  left: 32%;
-  top: 18%;
   font-size: 20px;
   font-weight: bold;
-  margin-left: 10px;
+  margin-left: 30px;
   color: red;
 }
 
 .right-title {
   position: absolute;
-  right: 18%;
-  top: 19%;
-  margin-left: 600px;
+  margin-left: 700px;
+  margin-top: 3px;
   color: white;
 }
 
