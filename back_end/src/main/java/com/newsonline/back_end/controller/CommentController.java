@@ -1,7 +1,7 @@
 package com.newsonline.back_end.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.newsonline.back_end.JsonResult;
+import com.newsonline.back_end.utils.JsonResult;
 import com.newsonline.back_end.dao.Comments;
 import com.newsonline.back_end.mapper.CommentMapper;
 import org.springframework.web.bind.annotation.GetMapping;

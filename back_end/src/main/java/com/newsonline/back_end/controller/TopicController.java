@@ -1,13 +1,12 @@
 package com.newsonline.back_end.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.newsonline.back_end.JsonResult;
+import com.newsonline.back_end.utils.JsonResult;
 import com.newsonline.back_end.dao.Topic;
 import com.newsonline.back_end.mapper.TopicMapper;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController

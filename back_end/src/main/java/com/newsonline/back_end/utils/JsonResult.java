@@ -1,4 +1,4 @@
-package com.newsonline.back_end;
+package com.newsonline.back_end.utils;
 
 public class JsonResult<T> {
     private T data;

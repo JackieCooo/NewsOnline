@@ -3,7 +3,9 @@ package com.newsonline.back_end.controller;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.newsonline.back_end.JsonResult;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.util.JSONPObject;
+import com.newsonline.back_end.utils.JsonResult;
 import com.newsonline.back_end.dao.Comments;
 import com.newsonline.back_end.dao.News;
 import com.newsonline.back_end.dao.Topic;
@@ -13,8 +15,10 @@ import com.newsonline.back_end.mapper.TopicMapper;
 import com.newsonline.back_end.struct.NewsStruct;
 import com.newsonline.back_end.struct.PaginationStruct;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.annotation.Resource;
+import java.io.*;
 import java.util.List;
 
 @RestController
@@ -99,9 +103,32 @@ public class NewsController {
     }
 
     @PostMapping("/news/append")
-    public JsonResult<String> appendNews(@RequestBody News body) {
-        int res = newsMapper.insert(body);
+    public JsonResult<String> appendNews(@RequestParam(value = "news")String rawNews, @RequestParam(value = "file", required = false, defaultValue = "null")MultipartFile file) {
+        System.out.println(rawNews);
+        System.out.println("文件名：" + file.getOriginalFilename() + ", 文件大小：" + file.getSize());
+/*
+        String filepath = NewsController.class.getResource("/").getFile() + "temp";
+        File file = new File(filepath);
+        File[] fileList = file.listFiles();
+        assert fileList != null;
+        if (fileList.length > 0) {
+            file = fileList[0];
+            try {
+                InputStream fis = new FileInputStream(file);
+                try {
+                    news.setNpic(fis.readAllBytes());
+                }
+                catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            }
+            catch (FileNotFoundException e) {
+                throw new RuntimeException(e);
+            }
+        }
+        int res = newsMapper.insert(news);
         if (res <= 0) return new JsonResult<>();
+*/
         return new JsonResult<>("");
     }
 
