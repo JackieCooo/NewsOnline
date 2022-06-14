@@ -5,6 +5,7 @@ const store = createStore({
         return {
             id: null,
             name: null,
+            curModifyNewsId: null,
         }
     },
     mutations: {
@@ -15,6 +16,9 @@ const store = createStore({
         logout(state) {
             state.id = null
             state.name = null
+        },
+        modifyNews(state, id) {
+            state.curModifyNewsId = id
         }
     }
 })

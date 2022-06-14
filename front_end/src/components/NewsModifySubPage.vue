@@ -1,6 +1,5 @@
 <template>
   <el-space v-if="true" direction="vertical" alignment="start" :size="20">
-    <StyledTitle title="添加新闻"></StyledTitle>
     <el-space class="content">
       <span>主题</span>
       <el-select v-model="selected">
@@ -55,14 +54,12 @@
 </template>
 
 <script>
-import StyledTitle from "@/components/StyledTitle";
 import {Plus, ZoomIn, Delete} from "@element-plus/icons-vue"
 import {ElMessage, ElMessageBox} from "element-plus"
 
 export default {
-  name: "NewsAddingPage",
+  name: "NewsModifySubPage",
   components: {
-    StyledTitle,
     Plus,
     ZoomIn,
     Delete,
@@ -160,19 +157,26 @@ export default {
   async created() {
     await this.$http.get('/api/topic').then((res)=>{
       this.topics = res.data.data
-      this.selected = this.topics[0].tid
+    }).catch((err)=>{
+      console.log(err)
+    })
+    await this.$http.get('/api/news/' + this.$store.state.curModifyNewsId).then((res)=>{
+      const newsData = res.data.data
+      this.selected = newsData.ntid
+      this.title = newsData.ntitle
+      this.author = newsData.nauthor
+      this.summary = newsData.nsummary
+      this.content = newsData.ncontent
+      // this.picFile = newsData.npic
     }).catch((err)=>{
       console.log(err)
     })
   }
 }
+
 </script>
 
 <style scoped>
-.content {
-  margin-top: 20px;
-}
-
 .input-width {
   width: 500px;
 }

@@ -6,7 +6,7 @@
         <el-col :span="16">{{i.ntitle}}</el-col>
         <el-col :span="4">作者：{{i.nauthor}}</el-col>
         <el-col :span="2">
-          <el-button type="primary">修改</el-button>
+          <el-button type="primary" @click="handleModifyBtnPush(i.nid)">修改</el-button>
         </el-col>
         <el-col :span="2">
           <el-button type="danger">删除</el-button>
@@ -15,19 +15,26 @@
     </el-space>
     <el-pagination background layout="prev, pager, next" :total="newsData.cnt" :default-page-size="15" @current-change="pageChange"></el-pagination>
   </el-space>
+
+  <el-dialog v-model="dialogVisible" class="dialog" :destroy-on-close="true">
+    <ModifyDialog></ModifyDialog>
+  </el-dialog>
 </template>
 
 <script>
 import StyledTitle from "@/components/StyledTitle";
+import ModifyDialog from "@/components/ModifyDialog";
 
 export default {
   name: "NewsModifyPage",
   components: {
     StyledTitle,
+    ModifyDialog,
   },
   data() {
     return {
       newsData: null,
+      dialogVisible: false,
     }
   },
   methods: {
@@ -38,6 +45,11 @@ export default {
         console.log(err)
       })
     },
+    handleModifyBtnPush(id) {
+      // console.log(id)
+      this.$store.commit("modifyNews", id)
+      this.dialogVisible = true
+    }
   },
   computed: {
     isDataReady() {

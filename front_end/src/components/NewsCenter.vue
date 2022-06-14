@@ -68,7 +68,7 @@ export default {
       })
     },
     gotoNews(id) {
-      this.$router.push('/news/' + id)
+      this.$router.push('/home/news/' + id)
     }
   },
 }

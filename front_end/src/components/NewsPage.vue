@@ -1,16 +1,16 @@
 <template>
   <el-space v-if="isDataReady" direction="vertical" alignment="start">
-    <h2>{{newsData.news.ntitle}}</h2>
+    <h2>{{newsData.ntitle}}</h2>
     <hr width="855" color="#909399" size="1">
     <div class="flex-box">
-      <span>作者：{{newsData.news.nauthor}}</span>
-      <span>类型：{{newsData.topic.tname}}</span>
-      <span>发布时间：{{newsData.news.ncreatedate}}</span>
+      <span>作者：{{newsData.nauthor}}</span>
+      <span>类型：{{newsTopic}}</span>
+      <span>发布时间：{{newsData.ncreatedate}}</span>
     </div>
-    <span style="font-weight: bold">摘要：{{newsData.news.nsummary}}</span>
-    <p>{{newsData.news.ncontent}}</p>
+    <span style="font-weight: bold">摘要：{{newsData.nsummary}}</span>
+    <p>{{newsData.ncontent}}</p>
     <hr width="855" color="#909399" size="1">
-    <el-space v-for="i in newsData.comments" :key="i" direction="vertical" alignment="start">
+    <el-space v-for="i in newsComments" :key="i" direction="vertical" alignment="start">
       <div class="flex-box">
         <span>留言人：{{i.cauthor}}</span>
         <span>IP：{{i.cip}}</span>
@@ -37,6 +37,8 @@ export default {
   data() {
     return {
       newsData: null,
+      newsTopic: null,
+      newsComments: null,
       username: '',
       ip: '',
       comment: '',
@@ -45,7 +47,7 @@ export default {
   },
   computed: {
     isDataReady() {
-      return this.newsData != null
+      return this.newsData != null && this.newsTopic != null && this.newsComments != null
     },
     isLogin() {
       return this.$store.state.id != null
@@ -54,6 +56,12 @@ export default {
   async created() {
     await this.$http.get('/api/news/' + this.newsId).then((res)=>{
       this.newsData = res.data.data
+      this.$http.get('/api/topic/' + this.newsData.ntid).then((res)=>{
+        this.newsTopic = res.data.data
+      })
+      this.$http.get('/api/comment/' + this.newsId).then((res)=>{
+        this.newsComments = res.data.data
+      })
     }).catch((err)=>{
       console.log(err)
     })

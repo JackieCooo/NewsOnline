@@ -79,7 +79,7 @@ export default {
       this.$router.push('/space')
     },
     gotoNews(id) {
-      this.$router.push('/news/' + id)
+      this.$router.push('/home/news/' + id)
     },
     textFormatting(str) {
       return str.length > 9 ? str.substr(0, 12) + '...' : str

@@ -3,8 +3,8 @@ package com.newsonline.back_end.controller;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.util.JSONPObject;
 import com.newsonline.back_end.utils.JsonResult;
 import com.newsonline.back_end.dao.Comments;
 import com.newsonline.back_end.dao.News;
@@ -31,24 +31,16 @@ public class NewsController {
     TopicMapper topicMapper;
     @Resource
     CommentMapper commentMapper;
+    @Resource
+    ObjectMapper objectMapper;
 
     @GetMapping("/news/{id}")
-    public JsonResult<NewsStruct> getNewsById(@PathVariable Integer id) {
+    public JsonResult<News> getNewsById(@PathVariable Integer id) {
         NewsStruct newsStruct = new NewsStruct();
         QueryWrapper<News> newsWrapper = new QueryWrapper<>();
         newsWrapper.eq("nid", id);
         News news = newsMapper.selectOne(newsWrapper);
-        assert news != null;
-        newsStruct.setNews(news);
-        QueryWrapper<Topic> topicWrapper = new QueryWrapper<>();
-        topicWrapper.eq("tid", news.getNtid());
-        Topic topic = topicMapper.selectOne(topicWrapper);
-        newsStruct.setTopic(topic);
-        QueryWrapper<Comments> commentsWrapper = new QueryWrapper<>();
-        commentsWrapper.eq("cnid", news.getNid());
-        List<Comments> comments = commentMapper.selectList(commentsWrapper);
-        newsStruct.setComments(comments);
-        return new JsonResult<>(newsStruct);
+        return new JsonResult<>(news);
     }
 
     @GetMapping("/title/{id}")
@@ -105,31 +97,27 @@ public class NewsController {
     @PostMapping("/news/append")
     public JsonResult<String> appendNews(@RequestParam(value = "news")String rawNews, @RequestParam(value = "file", required = false, defaultValue = "null")MultipartFile file) {
         System.out.println(rawNews);
-        System.out.println("文件名：" + file.getOriginalFilename() + ", 文件大小：" + file.getSize());
-/*
-        String filepath = NewsController.class.getResource("/").getFile() + "temp";
-        File file = new File(filepath);
-        File[] fileList = file.listFiles();
-        assert fileList != null;
-        if (fileList.length > 0) {
-            file = fileList[0];
+        News news;
+        try {
+            news = objectMapper.readValue(rawNews, News.class);
+        }
+        catch (JsonProcessingException e) {
+            throw new RuntimeException(e);
+        }
+//        System.out.println(news.toString());
+//        System.out.println("文件名：" + file.getOriginalFilename() + ", 文件大小：" + file.getSize());
+        if (file != null) {
             try {
-                InputStream fis = new FileInputStream(file);
-                try {
-                    news.setNpic(fis.readAllBytes());
-                }
-                catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
+                news.setNpic(file.getBytes());
             }
-            catch (FileNotFoundException e) {
+            catch (IOException e) {
                 throw new RuntimeException(e);
             }
         }
+
         int res = newsMapper.insert(news);
-        if (res <= 0) return new JsonResult<>();
-*/
-        return new JsonResult<>("");
+        if (res > 0) return new JsonResult<>("");
+        return new JsonResult<>();
     }
 
     @PostMapping("/news/modify")

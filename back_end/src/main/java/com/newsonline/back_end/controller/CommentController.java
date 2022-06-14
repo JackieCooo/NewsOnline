@@ -20,9 +20,9 @@ public class CommentController {
     CommentMapper commentMapper;
 
     @GetMapping("/comment/{id}")
-    public JsonResult<List<Comments>> getCommentByNid(@PathVariable Integer id) {
+    public JsonResult<List<Comments>> getCommentById(@PathVariable Integer id) {
         QueryWrapper<Comments> wrapper = new QueryWrapper<>();
-        wrapper.select("cnid", "ccontent", "cdate", "cauthor", "cip").eq("cnid", id);
+        wrapper.select("cid", "cnid", "ccontent", "cdate", "cauthor", "cip").eq("cnid", id);
         List<Comments> comments = commentMapper.selectList(wrapper);
         if (comments != null) {
             return new JsonResult<>(comments);
