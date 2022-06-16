@@ -1,6 +1,6 @@
 package com.newsonline.back_end.struct;
 
-import com.newsonline.back_end.dao.News;
+import com.newsonline.back_end.model.News;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

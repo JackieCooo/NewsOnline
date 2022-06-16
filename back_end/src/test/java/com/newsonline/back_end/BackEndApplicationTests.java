@@ -1,17 +1,12 @@
 package com.newsonline.back_end;
 
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.newsonline.back_end.dao.News;
-import com.newsonline.back_end.mapper.NewsMapper;
+import com.newsonline.back_end.model.News;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import javax.annotation.Resource;
-import java.util.List;
 
 @SpringBootTest
 class BackEndApplicationTests {

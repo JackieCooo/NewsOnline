@@ -1,6 +1,6 @@
 <template>
   <el-space v-if="isDataReady" direction="vertical" class="container">
-    <el-table :data="newsComments" style="width: 100%">
+    <el-table :data="newsComments" style="width: 100%" ref="table">
       <el-table-column type="selection"></el-table-column>
       <el-table-column label="内容" :width="300">
         <template #default="scope">{{scope.row.ccontent}}</template>
@@ -12,7 +12,7 @@
         <el-button circle type="danger" :icon="Delete" @click="handleSingleDelete(scope.row.cid)"></el-button>
       </el-table-column>
     </el-table>
-    <el-button>删除所选评论</el-button>
+    <el-button v-if="hasComment" @click="handleMultipleDelete">删除所选评论</el-button>
   </el-space>
 </template>
 
@@ -21,25 +21,62 @@ import {Delete} from "@element-plus/icons-vue"
 </script>
 
 <script>
+import {ElMessage} from 'element-plus'
+
 export default {
   name: "CommentModifySubPage",
   data() {
     return {
       newsComments: null,
-      deleteList: [],
     }
   },
   methods: {
     handleSingleDelete(id) {
-      this.deleteList.push(id)
+      // console.log(id)
+      let deleteList = []
+      deleteList.push(id)
+      this.handleDelete(deleteList)
     },
-    handleMutipleDelete() {
-
+    handleMultipleDelete() {
+      const selectedRows = this.$refs.table.getSelectionRows()
+      // console.log(selectedRows)
+      let deleteList = []
+      for (const i of selectedRows) {
+        // console.log(i.cid)
+        deleteList.push(i.cid)
+      }
+      console.log(deleteList)
+      this.handleDelete(deleteList)
+    },
+    async handleDelete(list) {
+      let formData = new FormData()
+      formData.append('list', JSON.stringify(list))
+      await this.$http({
+        url: '/api/comment/delete',
+        method: 'post',
+        data: formData,
+      }).then((res)=>{
+        console.log(res)
+        this.newsComments = this.newsComments.filter(item => !list.includes(item.cid))
+        ElMessage({
+          message: '评论已删除',
+          type: 'success'
+        })
+      }).catch((err)=>{
+        ElMessage({
+          message: '评论删除失败',
+          type: 'error'
+        })
+        console.log(err)
+      })
     },
   },
   computed: {
     isDataReady() {
       return this.newsComments != null
+    },
+    hasComment() {
+      return this.newsComments.length !== 0
     }
   },
   async created() {

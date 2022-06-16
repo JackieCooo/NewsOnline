@@ -1,8 +1,8 @@
 package com.newsonline.back_end.struct;
 
-import com.newsonline.back_end.dao.Comments;
-import com.newsonline.back_end.dao.News;
-import com.newsonline.back_end.dao.Topic;
+import com.newsonline.back_end.model.Comments;
+import com.newsonline.back_end.model.News;
+import com.newsonline.back_end.model.Topic;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

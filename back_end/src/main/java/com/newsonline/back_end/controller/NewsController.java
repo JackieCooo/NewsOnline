@@ -6,12 +6,8 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.newsonline.back_end.utils.JsonResult;
-import com.newsonline.back_end.dao.Comments;
-import com.newsonline.back_end.dao.News;
-import com.newsonline.back_end.dao.Topic;
-import com.newsonline.back_end.mapper.CommentMapper;
+import com.newsonline.back_end.model.News;
 import com.newsonline.back_end.mapper.NewsMapper;
-import com.newsonline.back_end.mapper.TopicMapper;
 import com.newsonline.back_end.struct.NewsStruct;
 import com.newsonline.back_end.struct.PaginationStruct;
 import org.springframework.web.bind.annotation.*;
@@ -27,10 +23,6 @@ public class NewsController {
 
     @Resource
     NewsMapper newsMapper;
-    @Resource
-    TopicMapper topicMapper;
-    @Resource
-    CommentMapper commentMapper;
     @Resource
     ObjectMapper objectMapper;
 
@@ -123,6 +115,13 @@ public class NewsController {
     @PostMapping("/news/modify")
     public JsonResult<String> modifyNews(@RequestBody News newNews) {
         int res = newsMapper.updateById(newNews);
+        if (res > 0) return new JsonResult<>("");
+        return new JsonResult<>();
+    }
+
+    @PostMapping("/news/delete")
+    public JsonResult<String> deleteNews(@RequestParam Integer nid) {
+        int res = newsMapper.deleteById(nid);
         if (res > 0) return new JsonResult<>("");
         return new JsonResult<>();
     }

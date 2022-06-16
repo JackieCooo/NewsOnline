@@ -1,4 +1,4 @@
-package com.newsonline.back_end.dao;
+package com.newsonline.back_end.model;
 
 import com.baomidou.mybatisplus.annotation.TableId;
 import lombok.AllArgsConstructor;

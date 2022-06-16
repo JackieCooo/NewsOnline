@@ -2,12 +2,9 @@ package com.newsonline.back_end.controller;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.newsonline.back_end.utils.JsonResult;
-import com.newsonline.back_end.dao.Comments;
+import com.newsonline.back_end.model.Comments;
 import com.newsonline.back_end.mapper.CommentMapper;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -27,6 +24,19 @@ public class CommentController {
         if (comments != null) {
             return new JsonResult<>(comments);
         }
+        return new JsonResult<>();
+    }
+
+    @PostMapping("/comment/delete")
+    public JsonResult<String> deleteComments(@RequestParam(value = "list")String list) {
+//        System.out.println(list);
+        String[] cidList = list.substring(1, list.length() - 1).split(",");
+        QueryWrapper<Comments> wrapper = new QueryWrapper<>();
+        for (int i = 0; i < cidList.length; i++) {
+            wrapper.eq("cid", Integer.parseInt(cidList[i]));
+            if (i != cidList.length - 1) wrapper.or();
+        }
+        if (commentMapper.delete(wrapper) > 0) return new JsonResult<>("");
         return new JsonResult<>();
     }
 }

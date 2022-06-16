@@ -9,7 +9,7 @@
           <el-button type="primary" @click="handleModifyBtnPush(i.nid)">修改</el-button>
         </el-col>
         <el-col :span="2">
-          <el-button type="danger">删除</el-button>
+          <el-button type="danger" @click="handleDelete(i.nid)">删除</el-button>
         </el-col>
       </el-row>
     </el-space>
@@ -23,7 +23,8 @@
 
 <script>
 import StyledTitle from "@/components/StyledTitle";
-import ModifyDialog from "@/components/ModifyDialog";
+import ModifyDialog from "@/components/NewsModifyDialog";
+import {ElMessage} from 'element-plus'
 
 export default {
   name: "NewsModifyPage",
@@ -49,6 +50,28 @@ export default {
       // console.log(id)
       this.$store.commit("modifyNews", id)
       this.dialogVisible = true
+    },
+    async handleDelete(id) {
+      await this.$http({
+        url: '/api/news/delete',
+        method: 'post',
+        params: {
+          nid: id,
+        }
+      }).then((res)=>{
+        console.log(res)
+        this.newsData = this.newsData.filter(item => item.nid !== id)
+        ElMessage({
+          message: '删除成功',
+          type: 'success',
+        })
+      }).catch((err)=>{
+        console.log(err)
+        ElMessage({
+          message: '删除失败',
+          type: 'error',
+        })
+      })
     }
   },
   computed: {
