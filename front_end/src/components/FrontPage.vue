@@ -7,7 +7,7 @@
       <el-input v-model="password"></el-input>
       <el-button @click="login">登录</el-button>
     </el-space>
-    <el-space v-else :size="50">
+    <el-space v-else :size="100">
       <span>欢迎您，{{getUserName}}</span>
       <el-button @click="gotoCtlPanel">控制面板</el-button>
       <el-button @click="logout">登出</el-button>

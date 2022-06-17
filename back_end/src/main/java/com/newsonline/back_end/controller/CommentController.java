@@ -27,6 +27,14 @@ public class CommentController {
         return new JsonResult<>();
     }
 
+    @PostMapping("/comment/append")
+    public JsonResult<String> appendComment(@RequestBody Comments comments) {
+//        System.out.println(comments.toString());
+        int res = commentMapper.insert(comments);
+        if (res > 0) return new JsonResult<>("");
+        return new JsonResult<>();
+    }
+
     @PostMapping("/comment/delete")
     public JsonResult<String> deleteComments(@RequestParam(value = "list")String list) {
 //        System.out.println(list);

@@ -140,10 +140,17 @@ export default {
         // },
       }).then((res)=>{
         console.log(res)
-        ElMessage("新闻已添加")
+        ElMessage({
+          message: '添加成功',
+          type: 'success',
+        })
         this.resetAll()
       }).catch((err)=>{
         console.log(err)
+        ElMessage({
+          message: '添加失败',
+          type: 'error',
+        })
       })
     }
   },

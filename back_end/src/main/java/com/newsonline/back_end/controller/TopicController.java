@@ -17,21 +17,19 @@ public class TopicController {
     TopicMapper topicMapper;
 
     @GetMapping("/topic")
-    public JsonResult<List<Topic>> getAllTopics() {
-        List<Topic> topics = topicMapper.selectList(null);
+    public JsonResult<List<Topic>> getTopicById(@RequestParam(required = false, defaultValue = "-1") Integer id) {
+        List<Topic> topics;
+        if (id != -1) {
+            QueryWrapper<Topic> wrapper = new QueryWrapper<>();
+            wrapper.select("tid", "tname").eq("tid", id);
+            topics = topicMapper.selectList(wrapper);
+        }
+        else {
+            topics = topicMapper.selectList(null);
+        }
+
         if (topics != null) {
             return new JsonResult<>(topics);
-        }
-        return new JsonResult<>();
-    }
-
-    @GetMapping("/topic/{id}")
-    public JsonResult<String> getTopicById(@PathVariable Integer id) {
-        QueryWrapper<Topic> wrapper = new QueryWrapper<>();
-        wrapper.select("tid", "tname").eq("tid", id);
-        Topic topic = topicMapper.selectOne(wrapper);
-        if (topic != null) {
-            return new JsonResult<>(topic.getTname());
         }
         return new JsonResult<>();
     }

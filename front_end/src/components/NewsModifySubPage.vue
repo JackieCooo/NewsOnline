@@ -132,15 +132,19 @@ export default {
         url: '/api/news/append',
         data: formData,
         method: 'post',
-        // headers: {
-        //   'Content-type': 'multipart/form-data',
-        // },
       }).then((res)=>{
         console.log(res)
-        ElMessage("新闻已添加")
+        ElMessage({
+          message: '修改成功',
+          type: 'success',
+        })
         this.resetAll()
       }).catch((err)=>{
         console.log(err)
+        ElMessage({
+          message: '修改失败',
+          type: 'error',
+        })
       })
     }
   },

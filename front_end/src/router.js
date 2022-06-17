@@ -31,7 +31,7 @@ const routes = [
     },
     {
         path: '/space',
-        redirect: '/space/modify_topic',
+        redirect: '/space/add_news',
         component: ControlPage,
         children: [
             {
