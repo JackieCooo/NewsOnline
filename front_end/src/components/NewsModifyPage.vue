@@ -60,7 +60,7 @@ export default {
         }
       }).then((res)=>{
         console.log(res)
-        this.newsData = this.newsData.filter(item => item.nid !== id)
+        this.newsData.news = this.newsData.news.filter(item => item.nid !== id)
         ElMessage({
           message: '删除成功',
           type: 'success',
@@ -81,8 +81,9 @@ export default {
   },
   async created() {
     await this.$http.get('/api/title?page=1').then((res)=>{
-      console.log(res)
+      // console.log(res)
       this.newsData = res.data.data
+      console.log(this.newsData)
     }).catch((err)=>{
       console.log(err)
     })

@@ -8,7 +8,6 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.newsonline.back_end.utils.JsonResult;
 import com.newsonline.back_end.model.News;
 import com.newsonline.back_end.mapper.NewsMapper;
-import com.newsonline.back_end.struct.NewsStruct;
 import com.newsonline.back_end.struct.PaginationStruct;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
@@ -28,10 +27,7 @@ public class NewsController {
 
     @GetMapping("/news/{id}")
     public JsonResult<News> getNewsById(@PathVariable Integer id) {
-        NewsStruct newsStruct = new NewsStruct();
-        QueryWrapper<News> newsWrapper = new QueryWrapper<>();
-        newsWrapper.eq("nid", id);
-        News news = newsMapper.selectOne(newsWrapper);
+        News news = newsMapper.selectById(id);
         return new JsonResult<>(news);
     }
 
@@ -87,7 +83,7 @@ public class NewsController {
     }
 
     @PostMapping("/news/append")
-    public JsonResult<String> appendNews(@RequestParam(value = "news")String rawNews, @RequestParam(value = "file", required = false, defaultValue = "null")MultipartFile file) {
+    public JsonResult<String> appendNews(@RequestParam(value = "news")String rawNews, @RequestParam(value = "file", required = false)MultipartFile file) {
         System.out.println(rawNews);
         News news;
         try {

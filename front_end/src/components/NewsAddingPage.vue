@@ -130,7 +130,7 @@ export default {
         nsummary: this.summary
       }
       formData.append('news', JSON.stringify(news))
-      formData.append('file', this.picFile)
+      if(this.picFile != null) formData.append('file', this.picFile)
       await this.$http({
         url: '/api/news/append',
         data: formData,

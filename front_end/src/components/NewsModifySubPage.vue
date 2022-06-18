@@ -114,7 +114,7 @@ export default {
         await ElMessageBox("标题、作者、摘要、内容为必填")
         return;
       }
-      let formData = new FormData()
+      // let formData = new FormData()
       const news = {
         nid: null,
         ntid: this.selected,
@@ -126,19 +126,21 @@ export default {
         nmodifydate: null,
         nsummary: this.summary
       }
-      formData.append('news', JSON.stringify(news))
-      formData.append('file', this.picFile)
+      // formData.append('news', JSON.stringify(news))
+      // if(this.picFile != null) formData.append('file', this.picFile)
       await this.$http({
-        url: '/api/news/append',
-        data: formData,
+        url: '/api/news/modify',
+        data: JSON.stringify(news),
         method: 'post',
+        headers: {
+          'Content-type': 'application/json',
+        },
       }).then((res)=>{
         console.log(res)
         ElMessage({
           message: '修改成功',
           type: 'success',
         })
-        this.resetAll()
       }).catch((err)=>{
         console.log(err)
         ElMessage({

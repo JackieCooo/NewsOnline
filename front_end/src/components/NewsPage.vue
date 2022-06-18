@@ -26,7 +26,7 @@
       <span>IP：</span>
       <el-input disabled v-model="ip"></el-input>
     </el-space>
-    <el-input type="textarea" :rows="10" v-model="comment" style="width: 800px" :disabled="!isLogin"></el-input>
+    <el-input type="textarea" :rows="8" v-model="comment" style="width: 800px" :disabled="!isLogin"></el-input>
     <el-button :disabled="!isLogin" @click="handleCommentSubmit">评论</el-button>
   </el-space>
 </template>
